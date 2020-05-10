@@ -1,12 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using BookStore_API.Data;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +12,8 @@ using Microsoft.OpenApi.Models;
 using System.IO;
 using BookStore_API.Contracts;
 using BookStore_API.Services;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using BookStore_API.Mappings;
+using AutoMapper;
 
 namespace BookStore_API
 {
@@ -46,6 +42,8 @@ namespace BookStore_API
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
+
+            services.AddAutoMapper(typeof(Maps));
 
             services.AddSwaggerGen(c => 
             {
