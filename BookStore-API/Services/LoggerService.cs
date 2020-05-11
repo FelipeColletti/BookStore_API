@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookStore_API.Services
 {
-    public class LoggerService : ILoggerServices
+    public class LoggerService : ILoggerService
     {
         private static ILogger logger = LogManager.GetCurrentClassLogger();
 

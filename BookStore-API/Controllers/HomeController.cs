@@ -12,9 +12,9 @@ namespace BookStore_API.Controllers
     [ApiController]
     public class HomeController : ControllerBase
     {
-        private readonly ILoggerServices _logger;
+        private readonly ILoggerService _logger;
 
-        public HomeController(ILoggerServices logger)
+        public HomeController(ILoggerService logger)
         {
             _logger = logger;
         }
