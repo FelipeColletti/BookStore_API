@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BookStore_API.Contracts;
-using Microsoft.AspNetCore.Http;
+﻿using BookStore_API.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace BookStore_API.Controllers
 {
@@ -30,7 +26,7 @@ namespace BookStore_API.Controllers
             _logger.LogInfo("Accessed Home Controller");
             return new string[] { "value1", "value2" };
         }
-        
+
         /// <summary>
         /// Get a value
         /// </summary>

@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using BookStore_API.Contracts;
 using BookStore_API.Data;
 using BookStore_API.DTOS;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BookStore_API.Controllers
 {
@@ -109,10 +103,8 @@ namespace BookStore_API.Controllers
                     _loggerService.LogWarn($"Author Data was incomplete");
                     return BadRequest(ModelState);
                 }
-
                 var author = _mapper.Map<Author>(authorDTO);
                 var isSucsses = await _authorRepository.Create(author);
-
                 if (!isSucsses)
                 {
                     return InternalError($"Author creation failed");
@@ -135,32 +127,33 @@ namespace BookStore_API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update(int id,[FromBody] AuthorUpdateDTO authorDTO)
+        public async Task<IActionResult> Update(int id, [FromBody] AuthorUpdateDTO authorDTO)
         {
+            var location = GetControllerNames();
             try
             {
-                _loggerService.LogInfo($"Author With - Id: {id} Update Attenpted");
+                _loggerService.LogInfo($"{location}: Update Attempted on Record with Id: {id}");
                 if (id < 1 || authorDTO == null || id != authorDTO.Id)
                 {
-                    _loggerService.LogWarn($"Author Upadte Failed With Bad Data");
+                    _loggerService.LogWarn($"{location}:Update failed with bad data - id: {id}");
                     return BadRequest();
                 }
                 var isExists = await _authorRepository.IsExists(id);
                 if (!isExists)
                 {
-                    _loggerService.LogInfo($"Author With Id: {id} Not Found");
+                    _loggerService.LogInfo($"{location}: Failed to retrieve record with Id: {id}");
                     return NotFound();
                 }
                 if (!ModelState.IsValid)
                 {
-                    _loggerService.LogWarn("Author Data Was Incomplete");
+                    _loggerService.LogWarn($"{location}: Data was Incomplete");
                     return BadRequest(ModelState);
                 }
                 var author = _mapper.Map<Author>(authorDTO);
                 var isSuccess = await _authorRepository.UpDate(author);
                 if (!isSuccess)
                 {
-                    return InternalError("Update operation Failed");
+                    return InternalError($"{location}: Update Failed for record with id:{id}");
                 }
                 _loggerService.LogWarn($"Author with id: {id} successfully updated");
                 return NoContent();
@@ -198,7 +191,7 @@ namespace BookStore_API.Controllers
                 }
                 _loggerService.LogInfo($"Author With Id: {id} Successfully Deleted");
                 return NoContent();
-            }   
+            }
             catch (Exception e)
             {
                 return InternalError($"{e.Message} - {e.InnerException}");
@@ -209,5 +202,12 @@ namespace BookStore_API.Controllers
             _loggerService.LogError(message);
             return StatusCode(500, "Something went wrong. Please contact the administrator");
         }
-    }   
+        private string GetControllerNames()
+        {
+            var controller = ControllerContext.ActionDescriptor.ControllerName;
+            var action = ControllerContext.ActionDescriptor.ActionName;
+
+            return $"{controller} - {action}";
+        }
+    }
 }

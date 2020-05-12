@@ -1,19 +1,19 @@
-using System;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using BookStore_API.Contracts;
 using BookStore_API.Data;
+using BookStore_API.Mappings;
+using BookStore_API.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Reflection;
 using Microsoft.OpenApi.Models;
+using System;
 using System.IO;
-using BookStore_API.Contracts;
-using BookStore_API.Services;
-using BookStore_API.Mappings;
-using AutoMapper;
+using System.Reflection;
 
 namespace BookStore_API
 {
@@ -45,22 +45,23 @@ namespace BookStore_API
 
             services.AddAutoMapper(typeof(Maps));
 
-            services.AddSwaggerGen(c => 
+            services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo 
-                { 
-                    Title = "Book Store API", 
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Book Store API",
                     Version = "v1",
                     Description = "This is an educational API for a Book Store"
                 });
 
                 var xfile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xpath = Path.Combine(AppContext.BaseDirectory,xfile);
+                var xpath = Path.Combine(AppContext.BaseDirectory, xfile);
                 c.IncludeXmlComments(xpath);
             });
 
             services.AddSingleton<ILoggerService, LoggerService>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<IBookRepository, BookRepository>();
 
             services.AddControllers();
         }
@@ -81,13 +82,13 @@ namespace BookStore_API
             }
 
             app.UseSwagger();
-            
-            app.UseSwaggerUI(c => 
+
+            app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Book Store API");
                 c.RoutePrefix = "";
             });
-            
+
             app.UseHttpsRedirection();
 
             app.UseCors("CorsPolycy");
