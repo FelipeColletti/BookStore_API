@@ -2,6 +2,7 @@
 using BookStore_API.Contracts;
 using BookStore_API.Data;
 using BookStore_API.DTOS;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,6 +16,7 @@ namespace BookStore_API.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BooksController : ControllerBase
     {
         private readonly IBookRepository _bookRepository;
@@ -87,6 +89,7 @@ namespace BookStore_API.Controllers
         /// <param name="bookDTO"></param>
         /// <returns>Book Object</returns>
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -127,6 +130,7 @@ namespace BookStore_API.Controllers
         /// <param name="bookDTO"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -167,24 +171,13 @@ namespace BookStore_API.Controllers
                 return InternalError($"{location}: {e.Message} - {e.InnerException}");
             }
         }
-        private string GetControllerNames()
-        {
-            var controller = ControllerContext.ActionDescriptor.ControllerName;
-            var action = ControllerContext.ActionDescriptor.ActionName;
-
-            return $"{controller} - {action}";
-        }
-        private ObjectResult InternalError(string message)
-        {
-            _loggerService.LogError(message);
-            return StatusCode(500, "Something went wrong. Please contact the administrator");
-        }
         /// <summary>
         /// Delete a book
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -219,6 +212,18 @@ namespace BookStore_API.Controllers
             {
                 return InternalError($"{location}: {e.Message} - {e.InnerException}");
             }
+        }
+        private string GetControllerNames()
+        {
+            var controller = ControllerContext.ActionDescriptor.ControllerName;
+            var action = ControllerContext.ActionDescriptor.ActionName;
+
+            return $"{controller} - {action}";
+        }
+        private ObjectResult InternalError(string message)
+        {
+            _loggerService.LogError(message);
+            return StatusCode(500, "Something went wrong. Please contact the administrator");
         }
     }
 }

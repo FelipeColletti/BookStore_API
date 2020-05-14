@@ -17,14 +17,14 @@
         </member>
         <member name="M:BookStore_API.Controllers.AuthorsController.GetAuthor(System.Int32)">
             <summary>
-            Get anauthor by id
+            Get an Author by id
             </summary>
             <param name="id"></param>
             <returns>An Author's record</returns>
         </member>
         <member name="M:BookStore_API.Controllers.AuthorsController.Create(BookStore_API.DTOS.AuthorCreateDTO)">
             <summary>
-            
+            Create an Author
             </summary>
             <param name="authorDTO"></param>
             <returns></returns>
@@ -35,6 +35,13 @@
             </summary>
             <param name="id"></param>
             <param name="authorDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookStore_API.Controllers.AuthorsController.Delete(System.Int32)">
+            <summary>
+            Delete an Author
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="T:BookStore_API.Controllers.BooksController">
@@ -62,6 +69,21 @@
             <param name="bookDTO"></param>
             <returns>Book Object</returns>
         </member>
+        <member name="M:BookStore_API.Controllers.BooksController.Update(System.Int32,BookStore_API.DTOS.BookUpdateDTO)">
+            <summary>
+            Udate a book
+            </summary>
+            <param name="id"></param>
+            <param name="bookDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookStore_API.Controllers.BooksController.Delete(System.Int32)">
+            <summary>
+            Delete a book
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:BookStore_API.Controllers.HomeController.Get">
             <summary>
             Get values
@@ -73,6 +95,20 @@
             Get a value
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookStore_API.Controllers.UsersController.Login(BookStore_API.Controllers.UserDTO)">
+            <summary>
+            User Login endpoint
+            </summary>
+            <param name="userDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BookStore_API.Controllers.UsersController.GenerateJSONWebTokens(Microsoft.AspNetCore.Identity.IdentityUser)">
+            <summary>
+            Generate Tokens
+            </summary>
+            <param name="user"></param>
             <returns></returns>
         </member>
     </members>
