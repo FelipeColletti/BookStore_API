@@ -29,7 +29,7 @@ namespace BookStore_API.Controllers
             _mapper = mapper;
         }
         /// <summary>
-        /// Get All Books
+        /// Get all Books
         /// </summary>
         /// <returns>A List Of Books</returns>
         [HttpGet]
@@ -54,7 +54,7 @@ namespace BookStore_API.Controllers
             }
         }
         /// <summary>
-        /// Get A Book By Id
+        /// Get a Book by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -84,7 +84,7 @@ namespace BookStore_API.Controllers
             }
         }
         /// <summary>
-        /// Creates A New Book
+        /// Creates a new Book
         /// </summary>
         /// <param name="bookDTO"></param>
         /// <returns>Book Object</returns>
@@ -124,7 +124,7 @@ namespace BookStore_API.Controllers
             }
         }
         /// <summary>
-        /// Udate a book
+        /// Udate a Book
         /// </summary>
         /// <param name="id"></param>
         /// <param name="bookDTO"></param>
@@ -172,7 +172,7 @@ namespace BookStore_API.Controllers
             }
         }
         /// <summary>
-        /// Delete a book
+        /// Delete a Book
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
