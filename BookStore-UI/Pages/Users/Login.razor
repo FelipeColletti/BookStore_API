@@ -6,31 +6,27 @@
 @inject IAuthenticationRepository _authRepo
 @inject NavigationManager _navManager
 
-<div class="card" style="width: 20rem;">
-    <h3 class="card-title">Login</h3>
-    @if (!response)
-    {
-        <div class="alert alert-danger">
-            <p>Something went wrong with the login attempt</p>
+<h3 class="card-title">Login</h3>
+@if (!response)
+{
+    <ErrorMessage Message="Something went wrong with the operation" />
+}
+<div class="card-body">
+    <EditForm Model="LoginModel" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <InputText id="email" class="form-control" @bind-Value="LoginModel.EmailAddress" />
+            <ValidationMessage For="@(() => LoginModel.EmailAddress)" />
         </div>
-    }
-    <div class="card-body">
-        <EditForm Model="LoginModel" OnValidSubmit="HandleLogin">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <div class="form-group">
-                <label for="email">Email address</label>
-                <InputText id="email" class="form-control" @bind-Value="LoginModel.EmailAddress" />
-                <ValidationMessage For="@(() => LoginModel.EmailAddress)" />
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <InputText id="password" type="password" class="form-control" @bind-Value="LoginModel.Password" />
-                <ValidationMessage For="@(() => LoginModel.Password)" />
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Submit</button>
-        </EditForm>
-    </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <InputText id="password" type="password" class="form-control" @bind-Value="LoginModel.Password" />
+            <ValidationMessage For="@(() => LoginModel.Password)" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+    </EditForm>
 </div>
 
 @code

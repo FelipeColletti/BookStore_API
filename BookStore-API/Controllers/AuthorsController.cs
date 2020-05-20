@@ -121,7 +121,7 @@ namespace BookStore_API.Controllers
             }
         }
         /// <summary>
-        /// Update an author
+        /// Update an Author
         /// </summary>
         /// <param name="id"></param>
         /// <param name="authorDTO"></param>
@@ -188,7 +188,7 @@ namespace BookStore_API.Controllers
                     return BadRequest();
                 }
                 var isExists = await _authorRepository.IsExists(id);
-                if (isExists)
+                if (!isExists)
                 {
                     _loggerService.LogInfo($"Author With Id: {id} Not Found");
                     return NotFound();
