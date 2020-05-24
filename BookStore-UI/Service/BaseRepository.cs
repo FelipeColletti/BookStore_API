@@ -78,11 +78,11 @@ namespace BookStore_UI.Service
         /// <returns></returns>
         public async Task<T> Get(string url, int id)
         {
-            try
+            try                  
             {
                 var request = new HttpRequestMessage(HttpMethod.Get, url + id);
                 var client = _client.CreateClient();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", await GetBearerToken());
+                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", await GetBearerToken());
                 HttpResponseMessage response = await client.SendAsync(request);
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
